@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - '10.16.3'
+
+before_script:
+  - npm install coveralls
+
+script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage

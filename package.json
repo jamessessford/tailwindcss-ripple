@@ -1,0 +1,31 @@
+{
+    "name": "tailwindcss-ripple",
+    "version": "0.0.1",
+    "description": "Materialize ripple effect for Tailwind",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "keywords": [
+        "tailwindcss",
+        "ripple",
+        "tailwindcss ripple",
+        "tailwind",
+        "tailwind ripple"
+    ],
+    "author": "James Sessford <hello@jamessessford.com>",
+    "license": "MIT",
+    "repository": "https://github.com/jamessessford/tailwindcss-ripple.git",
+    "bugs": "https://github.com/jamessessford/tailwindcss-ripple/issues",
+    "homepage": "https://github.com/jamessessford/tailwindcss-ripple",
+    "dependencies": {
+        "color": "^3.1.2",
+        "lodash": "^4.17.15"
+    },
+    "devDependencies": {
+        "jest": "^24.9.0",
+        "jest-matcher-css": "^1.1.0",
+        "postcss": "^7.0.18",
+        "tailwindcss": "^1.1.2"
+    }
+}

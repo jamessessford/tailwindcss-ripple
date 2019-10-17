@@ -45,7 +45,7 @@ The default configuration generates the following a ripple effect for each color
     transition: background 0s;
 }
 
-...;
+...
 ```
 
 Which you can then use in your HTML like this:

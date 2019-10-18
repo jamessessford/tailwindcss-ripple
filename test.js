@@ -9,13 +9,7 @@ const generatePluginCss = config => {
         tailwindcss(
             _.merge(
                 {
-                    theme: {
-                        ripple: {
-                            colors: {
-                                black: '#000',
-                            },
-                        },
-                    },
+                    theme: {},
                     corePlugins: false,
                     plugins: [ripplePlugin()],
                 },
@@ -35,34 +29,32 @@ expect.extend({
     toMatchCss: cssMatcher,
 });
 
-test('The plugin will generate a requested colour', () => {
+test('The plugin will generate nothing if no colors are available', () => {
     return generatePluginCss().then(css => {
-        expect(css).toMatchCss(`
-                .ripple-bg-black {
-                background-color: #000;
-                background-position: center;
-                transition: background 0.8s;
-                }
-
-                .ripple-bg-black:hover {
-                background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
-                }
-
-                .ripple-bg-black:active {
-                background-color: #000;
-                background-size: 100%;
-                transition: background 0s;
-                }
-            `);
+        expect(css).toMatchCss(``);
     });
 });
 
-test('The plugin will generate a different colour', () => {
+test('The plugin will generate nothing if a dud color is passed', () => {
     return generatePluginCss({
         theme: {
             ripple: {
                 colors: {
-                    'purple-300': '#d6bcfa',
+                    random: 'transparent',
+                },
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(``);
+    });
+});
+
+test('The plugin will generate a requested colour', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    black: '#000',
                 },
             },
         },
@@ -83,7 +75,21 @@ test('The plugin will generate a different colour', () => {
                     background-size: 100%;
                     transition: background 0s;
                 }
+            `);
+    });
+});
 
+test('The plugin will generate a different colour', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    'purple-300': '#d6bcfa',
+                },
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
                 .ripple-bg-purple-300 {
                     background-color: #d6bcfa;
                     background-position: center;
@@ -96,6 +102,55 @@ test('The plugin will generate a different colour', () => {
 
                 .ripple-bg-purple-300:active {
                     background-color: #d6bcfa;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+            `);
+    });
+});
+
+test('The plugin will generate colors from a map', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+                .ripple-bg-map-one {
+                    background-color: #000;
+                    background-position: center;
+                    transition: background 0.8s;
+                }
+
+                .ripple-bg-map-one:hover {
+                    background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+                }
+
+                .ripple-bg-map-one:active {
+                    background-color: #000;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+
+                .ripple-bg-map-two {
+                    background-color: #fff;
+                    background-position: center;
+                    transition: background 0.8s;
+                }
+
+                .ripple-bg-map-two:hover {
+                    background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+                }
+
+                .ripple-bg-map-two:active {
+                    background-color: #fff;
                     background-size: 100%;
                     transition: background 0s;
                 }

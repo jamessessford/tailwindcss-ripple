@@ -29,7 +29,8 @@ npm install tailwindcss-ripple
 The default configuration generates the following a ripple effect for each color in your theme :
 
 ```css
-... .ripple-bg-gray-300 {
+...
+.ripple-bg-gray-300 {
     background-color: #e2e8f0;
     background-position: center;
     transition: background 0.8s;

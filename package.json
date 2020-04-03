@@ -23,11 +23,10 @@
         "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "github-release-from-changelog": "^2.1.1",
-        "jest": "^24.9.0",
+        "jest": "^25.2.6",
         "jest-matcher-css": "^1.1.0",
         "postcss": "^7.0.27",
-        "release-it": "^12.6.3",
+        "release-it": "^13.5.1",
         "tailwindcss": "^1.2.0"
     }
 }

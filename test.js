@@ -157,3 +157,253 @@ test('The plugin will generate colors from a map', () => {
             `);
     });
 });
+
+test('The plugin can accept a parameter for the darken value', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                darken: 0.1
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+                .ripple-bg-map-one {
+                    background-color: #000;
+                    background-position: center;
+                    transition: background 0.8s;
+                }
+
+                .ripple-bg-map-one:hover {
+                    background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+                }
+
+                .ripple-bg-map-one:active {
+                    background-color: #000;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+
+                .ripple-bg-map-two {
+                    background-color: #fff;
+                    background-position: center;
+                    transition: background 0.8s;
+                }
+
+                .ripple-bg-map-two:hover {
+                    background: #E6E6E6 radial-gradient(circle, transparent 1%, #E6E6E6 1%) center/15000%;
+                }
+
+                .ripple-bg-map-two:active {
+                    background-color: #fff;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+            `);
+    });
+});
+
+test('The plugin uses the darken value', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                darken: 0.2
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+            .ripple-bg-map-one {
+                background-color: #000;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-one:hover {
+                background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+            }
+
+            .ripple-bg-map-one:active {
+                background-color: #000;
+                background-size: 100%;
+                transition: background 0s;
+            }
+
+            .ripple-bg-map-two {
+                background-color: #fff;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-two:hover {
+                background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+            }
+
+            .ripple-bg-map-two:active {
+                background-color: #fff;
+                background-size: 100%;
+                transition: background 0s;
+            }
+            `);
+    });
+});
+
+test('The plugin rejects a dud darken value and uses the default', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                darken: 'dudvalue'
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+            .ripple-bg-map-one {
+                background-color: #000;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-one:hover {
+                background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+            }
+
+            .ripple-bg-map-one:active {
+                background-color: #000;
+                background-size: 100%;
+                transition: background 0s;
+            }
+
+            .ripple-bg-map-two {
+                background-color: #fff;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-two:hover {
+                background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+            }
+
+            .ripple-bg-map-two:active {
+                background-color: #fff;
+                background-size: 100%;
+                transition: background 0s;
+            }
+            `);
+    });
+});
+
+test('The plugin rejects too low a darken value and uses the default', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                darken: -0.5
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+            .ripple-bg-map-one {
+                background-color: #000;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-one:hover {
+                background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+            }
+
+            .ripple-bg-map-one:active {
+                background-color: #000;
+                background-size: 100%;
+                transition: background 0s;
+            }
+
+            .ripple-bg-map-two {
+                background-color: #fff;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-two:hover {
+                background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+            }
+
+            .ripple-bg-map-two:active {
+                background-color: #fff;
+                background-size: 100%;
+                transition: background 0s;
+            }
+            `);
+    });
+});
+
+test('The plugin rejects too high a darken value and uses the default', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                darken: 1.2
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+            .ripple-bg-map-one {
+                background-color: #000;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-one:hover {
+                background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+            }
+
+            .ripple-bg-map-one:active {
+                background-color: #000;
+                background-size: 100%;
+                transition: background 0s;
+            }
+
+            .ripple-bg-map-two {
+                background-color: #fff;
+                background-position: center;
+                transition: background 0.8s;
+            }
+
+            .ripple-bg-map-two:hover {
+                background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+            }
+
+            .ripple-bg-map-two:active {
+                background-color: #fff;
+                background-size: 100%;
+                transition: background 0s;
+            }
+            `);
+    });
+});

@@ -5,6 +5,11 @@ module.exports = function() {
     return ({ theme, e, addComponents }) => {
         const defaultBgColors = {};
         const rippleBgColors = theme('ripple.colors', defaultBgColors);
+        const defaultDarkenValue = 0.2;
+        let darkenValue = theme('ripple.darken', defaultDarkenValue);
+        if (isNaN(darkenValue) || darkenValue > 1 || darkenValue < 0) {
+            darkenValue = defaultDarkenValue;
+        }
 
         function returnColorPair([modifier, value]) {
             return [
@@ -15,12 +20,12 @@ module.exports = function() {
                     transition: 'background 0.8s',
                     '&:hover': {
                         background: `${Color(value)
-                            .darken(0.2)
+                            .darken(darkenValue)
                             .hex()
                             .toString()} radial-gradient(circle, transparent 1%, ${Color(
                             value
                         )
-                            .darken(0.2)
+                            .darken(darkenValue)
                             .hex()
                             .toString()} 1%) center/15000%`,
                     },

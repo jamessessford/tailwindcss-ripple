@@ -17,11 +17,11 @@ npm install tailwindcss-ripple
 {
   theme: {
     ripple: theme => ({
-        colors: theme('colors'),
+        colors: theme('colors')
     }),
   },
   plugins: [
-    require('tailwindcss-ripple')(),
+    require('tailwindcss-ripple')()
   ],
 }
 ```
@@ -56,6 +56,25 @@ Which you can then use in your HTML like this:
 <button class="ripple-bg-gray-300">
     Hover me for a lighter background, click me for a ripple effect
 </button>
+```
+
+## The Ripple Effect
+
+By default, the color generated for the ripple effect is a 20% darken of the supplied color. This can be customised by passing in a parameter in your tailwind config file.
+
+```js
+// tailwind.config.js
+{
+  theme: {
+    ripple: theme => ({
+        colors: theme('colors'),
+        darken: 0.1
+    }),
+  },
+  plugins: [
+    require('tailwindcss-ripple')()
+  ],
+}
 ```
 
 [![Build Status](https://travis-ci.org/jamessessford/tailwindcss-ripple.svg?branch=master)](https://travis-ci.org/jamessessford/tailwindcss-ripple)

@@ -7,7 +7,7 @@ and this project mostly adheres to [Semantic Versioning](https://semver.org/spec
 
 ## [0.6.0] - 2021-02-06
 
--   Named colors can now be exported [Issue](https://github.com/jamessessford/tailwindcss-ripple/issues/3).
+-   Named colors can now be exported [Issue](https://github.com/jamessessford/tailwindcss-ripple/issues/5).
 
 ## [0.5.0] - 2020-06-13
 

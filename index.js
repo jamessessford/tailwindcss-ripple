@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Color = require('color');
 
 module.exports = function() {
-    return ({ theme, e, addComponents }) => {
+    return ({ theme, e, addComponents, postcss }) => {
         const defaultBgColors = {};
         const rippleBgColors = theme('ripple.colors', defaultBgColors);
         const defaultDarkenValue = 0.2;
@@ -47,12 +47,15 @@ module.exports = function() {
                 }
                 if (
                     typeof value == 'string' &&
-                    value.length > 1 &&
-                    value.charAt(0) == '#'
+                    value.length > 1
                 ) {
+                    try {
+                        Color(value)
+                    } catch (err) {
+                        return [];
+                    }
                     return [[`.${e(`ripple-bg-${modifier}`)}`, value]];
                 }
-                return [];
             })
             .value();
 

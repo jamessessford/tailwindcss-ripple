@@ -25,6 +25,37 @@ const generatePluginCss = config => {
         });
 };
 
+const variablesCssSheet = `
+
+:root {
+    --test-color: dodgerblue;
+}
+
+@tailwind components;
+`;
+
+
+const generatePluginVariablesCss = config => {
+    return postcss(
+        tailwindcss(
+            _.merge(
+                {
+                    theme: {},
+                    corePlugins: false,
+                    plugins: [ripplePlugin()],
+                },
+                config
+            )
+        )
+    )
+        .process(variablesCssSheet, {
+            from: undefined,
+        })
+        .then(result => {
+            return result.css;
+        });
+};
+
 expect.extend({
     toMatchCss: cssMatcher,
 });
@@ -35,17 +66,33 @@ test('The plugin will generate nothing if no colors are available', () => {
     });
 });
 
-test('The plugin will generate nothing if a dud color is passed', () => {
+test('The plugin works with named colors', () => {
     return generatePluginCss({
         theme: {
             ripple: {
                 colors: {
-                    random: 'transparent',
+                    dodgerblue: 'dodgerblue',
                 },
             },
         },
     }).then(css => {
-        expect(css).toMatchCss(``);
+        expect(css).toMatchCss(`
+                .ripple-bg-dodgerblue {
+                    background-color: dodgerblue;
+                    background-position: center;
+                    transition: background 0.8s;
+                }
+
+                .ripple-bg-dodgerblue:hover {
+                    background: #0074E4 radial-gradient(circle, transparent 1%, #0074E4 1%) center/15000%;
+                }
+
+                .ripple-bg-dodgerblue:active {
+                    background-color: dodgerblue;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+            `);
     });
 });
 

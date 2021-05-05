@@ -10,6 +10,10 @@ module.exports = function() {
         if (isNaN(darkenValue) || darkenValue > 1 || darkenValue < 0) {
             darkenValue = defaultDarkenValue;
         }
+        const defaultModifierTransition = 'background 0.8s';
+        let modifierTransition = theme('ripple.modifierTransition', defaultModifierTransition);
+        const defaultActiveTransition = 'background 0s';
+        let activeTransition = theme('ripple.activeTransition', defaultActiveTransition);
 
         function returnColorPair([modifier, value]) {
             return [
@@ -17,7 +21,7 @@ module.exports = function() {
                 {
                     backgroundColor: value,
                     backgroundPosition: 'center',
-                    transition: 'background 0.8s',
+                    transition: modifierTransition,
                     '&:hover': {
                         background: `${Color(value)
                             .darken(darkenValue)
@@ -32,7 +36,7 @@ module.exports = function() {
                     '&:active': {
                         backgroundColor: value,
                         backgroundSize: '100%',
-                        transition: 'background 0s',
+                        transition: activeTransition,
                     },
                 },
             ];

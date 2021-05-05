@@ -454,3 +454,104 @@ test('The plugin rejects too high a darken value and uses the default', () => {
             `);
     });
 });
+
+test('The plugin will accept transition modifiers', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                modifierTransition: 'background 0.2s',
+                activeTransition: 'background 0.1s'
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+                .ripple-bg-map-one {
+                    background-color: #000;
+                    background-position: center;
+                    transition: background 0.2s;
+                }
+
+                .ripple-bg-map-one:hover {
+                    background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+                }
+
+                .ripple-bg-map-one:active {
+                    background-color: #000;
+                    background-size: 100%;
+                    transition: background 0.1s;
+                }
+
+                .ripple-bg-map-two {
+                    background-color: #fff;
+                    background-position: center;
+                    transition: background 0.2s;
+                }
+
+                .ripple-bg-map-two:hover {
+                    background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+                }
+
+                .ripple-bg-map-two:active {
+                    background-color: #fff;
+                    background-size: 100%;
+                    transition: background 0.1s;
+                }
+            `);
+    });
+});
+
+test('The plugin will use default transition modifiers', () => {
+    return generatePluginCss({
+        theme: {
+            ripple: {
+                colors: {
+                    map: {
+                        one: '#000',
+                        two: '#fff',
+                    },
+                },
+                modifierTransition: 'background 0.2s'
+            },
+        },
+    }).then(css => {
+        expect(css).toMatchCss(`
+                .ripple-bg-map-one {
+                    background-color: #000;
+                    background-position: center;
+                    transition: background 0.2s;
+                }
+
+                .ripple-bg-map-one:hover {
+                    background: #000000 radial-gradient(circle, transparent 1%, #000000 1%) center/15000%;
+                }
+
+                .ripple-bg-map-one:active {
+                    background-color: #000;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+
+                .ripple-bg-map-two {
+                    background-color: #fff;
+                    background-position: center;
+                    transition: background 0.2s;
+                }
+
+                .ripple-bg-map-two:hover {
+                    background: #CCCCCC radial-gradient(circle, transparent 1%, #CCCCCC 1%) center/15000%;
+                }
+
+                .ripple-bg-map-two:active {
+                    background-color: #fff;
+                    background-size: 100%;
+                    transition: background 0s;
+                }
+            `);
+    });
+});

@@ -77,5 +77,47 @@ By default, the color generated for the ripple effect is a 20% darken of the sup
 }
 ```
 
+You can also change the transition properties on the created class and it's active state
+
+```js
+// tailwind.config.js
+{
+  theme: {
+    ripple: theme => ({
+        colors: theme('colors'),
+        modifierTransition: 'background 0.2s',
+        activeTransition: 'background 0.1s'
+    }),
+  },
+  plugins: [
+    require('tailwindcss-ripple')()
+  ],
+}
+```
+
+Would generate the following CSS
+
+```css
+...
+
+.ripple-bg-gray-300 {
+    background-color: #e2e8f0;
+    background-position: center;
+    transition: background 0.2s;
+}
+
+.ripple-bg-gray-300:hover {
+    background: #a5b7d0 radial-gradient(circle, transparent 1%, #a5b7d0 1%) center/15000%;
+}
+
+.ripple-bg-gray-300:active {
+    background-color: #e2e8f0;
+    background-size: 100%;
+    transition: background 0.1s;
+}
+
+...
+```
+
 [![Build Status](https://travis-ci.org/jamessessford/tailwindcss-ripple.svg?branch=master)](https://travis-ci.org/jamessessford/tailwindcss-ripple)
 [![Coverage Status](https://coveralls.io/repos/github/jamessessford/tailwindcss-ripple/badge.svg?branch=master)](https://coveralls.io/github/jamessessford/tailwindcss-ripple?branch=master)
